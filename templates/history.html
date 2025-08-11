@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<p>Welcome, {{ session.username }} | <a href="{{ url_for('upload_file') }}">Upload</a> | <a href="{{ url_for('logout') }}">Logout</a></p>
+<h2>Transfer History</h2>
+{% if transfers %}
+  <table class="table table-bordered">
+    <thead><tr><th>Filename</th><th>Size (bytes)</th><th>Time</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for t in transfers %}
+      <tr>
+        <td>{{ t.filename }}</td>
+        <td>{{ t.filesize }}</td>
+        <td>{{ t.transfer_time }}</td>
+        <td><a class="btn btn-sm btn-primary" href="{{ url_for('download', transfer_id=t.id) }}">Download</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No transfers yet.</p>
+{% endif %}
+{% endblock %}
